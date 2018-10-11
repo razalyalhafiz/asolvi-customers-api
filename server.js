@@ -19,8 +19,26 @@ var jwtCheck = jwt({
   algorithms: ["RS256"]
 });
 
-// Enable the use of the jwtCheck middleware in all of the routes
+// Below is a middleware function to ensure the client has permissions to the API endpoint
+var guard = function (req, res, next) {
+    switch (req.path) {
+        case '/customers': {
+            var permissions = ['general'];
+            for (var i = 0; i < permissions.length; i++) {
+                if (req.user.scope.includes(permissions[i])) {
+                    next();
+                } else {
+                    res.send(403, { message: 'Forbidden' });
+                }
+            }
+            break;
+        }
+    }
+};
+
+// Enable the use of the jwtCheck & guard middleware in all of the routes
 app.use(jwtCheck);
+app.use(guard);
 
 // If incorrect credentials are submitted, an appropriate error message will be returned
 app.use(function (err, req, res, next) {
