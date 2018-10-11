@@ -2,12 +2,11 @@
 var express = require('express');
 var app = express();
 var jwt = require('express-jwt');
-var jwks = require("jwks-rsa")
-
+var jwks = require("jwks-rsa");
 var port = process.env.PORT || 8080;
 
 // Below is a middleware function to validate the access token when our API is called
-// Note that the audience field is the identifier given to the Auth0 API.
+// Note that the audience field is the identifier given to the Auth0 API
 var jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -18,7 +17,17 @@ var jwtCheck = jwt({
   audience: "https://asolvi-customers-api.herokuapp.com",
   issuer: "https://razalyalhafiz.au.auth0.com/",
   algorithms: ["RS256"]
-})
+});
+
+// Enable the use of the jwtCheck middleware in all of the routes
+app.use(jwtCheck);
+
+// If incorrect credentials are submitted, an appropriate error message will be returned
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).json({ message: 'Missing or invalid token' });
+    }
+});
 
 // Implement the customers API endpoint
 app.get('/customers', function(req, res){
@@ -31,17 +40,7 @@ app.get('/customers', function(req, res){
 
 // Send the response as a JSON array
 res.json(customers);
-})
-
-// Enable the use of the jwtCheck middleware in all of our routes
-app.use(jwtCheck);
-
-// If we do not get the correct credentials, we’ll return an appropriate message
-app.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).json({ message: 'Missing or invalid token' });
-    }
 });
 
-// Launch our API Server and have it listen on port 8080.
+// Launch our API Server and have it listen on port 8080
 app.listen(port);
