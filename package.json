@@ -1,0 +1,17 @@
+{
+  "name": "asolvi-customers-api",
+  "version": "1.0.0",
+  "description": "An API that provides listing of customers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Razaly Alhafiz",
+  "license": "ISC",
+  "dependencies": {
+    "auth0-api-jwt-rsa-validation": "0.0.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1"
+  }
+}
