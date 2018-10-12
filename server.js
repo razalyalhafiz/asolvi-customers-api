@@ -8,16 +8,17 @@ const port = process.env.PORT || 8080;
 
 const config = require('./config.json');
 const apiIdentifier = config.apiIdentifier;
+const auth0Domain = config.auth0Domain;
 
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: "https://razalyalhafiz.au.auth0.com/.well-known/jwks.json"
+    jwksUri: `${auth0Domain}/.well-known/jwks.json`
   }),
   audience: apiIdentifier,
-  issuer: "https://razalyalhafiz.au.auth0.com/",
+  issuer: auth0Domain,
   algorithms: ["RS256"]
 })
 
@@ -28,4 +29,4 @@ app.get('/', checkJwt, (req, res) => {
   res.send({ hello: 'world' })
 });
 
-app.listen(port, () => console.log('Example app listening on port ${port}!'));
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));

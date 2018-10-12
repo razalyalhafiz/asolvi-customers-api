@@ -1,3 +1,4 @@
 {
-  "apiIdentifier": "https://asolvi-customers-api.herokuapp.com"
+  "apiIdentifier": "https://asolvi-customers-api.herokuapp.com",
+  "auth0Domain": "https://razalyalhafiz.au.auth0.com"
 }
