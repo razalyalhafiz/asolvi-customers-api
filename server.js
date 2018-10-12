@@ -13,7 +13,7 @@ const checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: "https://razalyalhafiz.au.auth0.com/.well-known/jwks.json"
   }),
-  audience: "http://localhost:" + port,
+  audience: "https://asolvi-customers-api.herokuapp.com",
   issuer: "https://razalyalhafiz.au.auth0.com/",
   algorithms: ["RS256"]
 });
