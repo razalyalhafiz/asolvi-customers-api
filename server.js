@@ -6,6 +6,9 @@ const jwksRsa = require('jwks-rsa');
 const app = express();
 const port = process.env.PORT || 8080;
 
+const config = require('./config.json');
+const apiIdentifier = config.apiIdentifier;
+
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -13,10 +16,10 @@ const checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: "https://razalyalhafiz.au.auth0.com/.well-known/jwks.json"
   }),
-  audience: "https://asolvi-customers-api.herokuapp.com",
+  audience: apiIdentifier,
   issuer: "https://razalyalhafiz.au.auth0.com/",
   algorithms: ["RS256"]
-});
+})
 
 app.use(cors());
 
