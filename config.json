@@ -1,4 +1,5 @@
 {
   "apiIdentifier": "https://asolvi-customers-api.herokuapp.com",
-  "auth0Domain": "https://razalyalhafiz.au.auth0.com"
+  "auth0Domain": "https://razalyalhafiz.au.auth0.com",
+  "PORT": "8080"
 }
