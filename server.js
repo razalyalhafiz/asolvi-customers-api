@@ -6,8 +6,8 @@ const jwksRsa = require('jwks-rsa');
 const app = express();
 
 const config = require('./config.json');
-const apiIdentifier = config.apiIdentifier;
-const auth0Domain = config.auth0Domain;
+const API_AUDIENCE = config.API_AUDIENCE;
+const AUTH0_DOMAIN = config.AUTH0_DOMAIN;
 const PORT = process.env.PORT || config.PORT;
 
 const checkJwt = jwt({
@@ -15,10 +15,10 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `${auth0Domain}/.well-known/jwks.json`
+    jwksUri: `${AUTH0_DOMAIN}/.well-known/jwks.json`
   }),
-  audience: apiIdentifier,
-  issuer: auth0Domain,
+  audience: API_AUDIENCE,
+  issuer: AUTH0_DOMAIN,
   algorithms: ["RS256"]
 })
 
