@@ -1,5 +1,5 @@
 {
   "API_AUDIENCE": "https://asolvi-customers-api.herokuapp.com",
-  "AUTH0_DOMAIN": "https://razalyalhafiz.au.auth0.com",
+  "AUTH0_DOMAIN": "https://razalyalhafiz.au.auth0.com/",
   "PORT": "8080"
 }
