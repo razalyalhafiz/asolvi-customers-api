@@ -35,7 +35,7 @@ app.get('/', checkJwt, (req, res) => {
     { id: 3, name: 'Mindy Lee', status: 'cool', avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/laurengray/128.jpg' }
   ];
   
-  res.json(customers);
+  res.send(customers);
 });
 
 app.listen(PORT, () => console.log(`API listening on port ${PORT}!`));
