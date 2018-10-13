@@ -7,6 +7,7 @@ const app = express();
 
 const customers = require("./customers.js")
 const config = require('./config.json');
+
 const API_AUDIENCE = config.API_AUDIENCE;
 const AUTH0_DOMAIN = config.AUTH0_DOMAIN;
 const PORT = process.env.PORT || config.PORT;
@@ -27,12 +28,26 @@ app.use(cors());
 
 app.get('/', checkJwt, (req, res) => {
   console.log(req.user);
-  res.send('hello <b>world!</b>');
+  res.send('Hello <b>world!</b>');
 });
 
 app.get('/customers', checkJwt, (req, res) => {
-  console.log(req.user);
-  res.json(customers);
+  let response = [];
+  console.log(req.query);
+
+  if (typeof req.query.status != 'undefined') {
+    customers.filter(function (customer) {
+      if (customer.status === req.query.status) {
+        response.push(customer);
+      }
+    });
+  }
+
+  if (Object.keys(req.query).length === 0) {
+    response = customers;
+  }
+
+  res.json(response);
 });
 
 app.listen(PORT, () => console.log(`API listening on port ${PORT}!`));
