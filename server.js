@@ -5,7 +5,7 @@ const jwksRsa = require('jwks-rsa');
 
 const app = express();
 
-const customers = require("./customers.js")
+const customers = require('./customers.js');
 const config = require('./config.json');
 
 const API_AUDIENCE = config.API_AUDIENCE;
@@ -21,19 +21,19 @@ const checkJwt = jwt({
   }),
   audience: API_AUDIENCE,
   issuer: AUTH0_DOMAIN,
-  algorithms: ["RS256"]
+  algorithms: ['RS256']
 })
 
 app.use(cors());
 
 app.get('/', checkJwt, (req, res) => {
-  console.log(req.user);
+  console.log(`User: ${req.user}`);
   res.send('Hello <b>world!</b>');
 });
 
 app.get('/customers', checkJwt, (req, res) => {
   let response = [];
-  console.log(req.query);
+  console.log(`Query parameters: ${req.query}`);
 
   if (typeof req.query.status != 'undefined') {
     customers.filter(function (customer) {
