@@ -1,17 +1,19 @@
-const express = require('express');
-const cors = require('cors');
-const jwt = require('express-jwt');
-const jwksRsa = require('jwks-rsa');
+// Get dependencies
+const express = require("express")
+const cors = require("cors")
+const jwt = require("express-jwt")
+const jwksRsa = require("jwks-rsa")
+const app = express()
 
-const app = express();
+// Get customers data & config entries
+const customers = require("./customers.js")
+const config = require("./config.json")
 
-const customers = require('./customers.js');
-const config = require('./config.json');
+const API_AUDIENCE = config.API_AUDIENCE
+const AUTH0_DOMAIN = config.AUTH0_DOMAIN
+const PORT = process.env.PORT || config.PORT
 
-const API_AUDIENCE = config.API_AUDIENCE;
-const AUTH0_DOMAIN = config.AUTH0_DOMAIN;
-const PORT = process.env.PORT || config.PORT;
-
+// Initialize checkJwt object
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -21,33 +23,36 @@ const checkJwt = jwt({
   }),
   audience: API_AUDIENCE,
   issuer: AUTH0_DOMAIN,
-  algorithms: ['RS256']
+  algorithms: ["RS256"]
 })
 
-app.use(cors());
+app.use(cors())
 
-app.get('/', checkJwt, (req, res) => {
-  console.log(`User: ${req.user}`);
-  res.send('Hello <b>world!</b>');
-});
+// Define routes
+app.get("/", checkJwt, (req, res) => {
+  console.log(`User: ${req.user}`)
+  res.send("Hello <b>world!</b>")
+})
 
-app.get('/customers', checkJwt, (req, res) => {
-  let response = [];
-  console.log(`Query parameters: ${req.query}`);
+app.get("/customers", checkJwt, (req, res) => {
+  let response = []
+  console.log(`Query parameters: ${req.query}`)
 
-  if (typeof req.query.status != 'undefined') {
-    customers.filter(function (customer) {
+  // Enable filtering of customers by property: status
+  if (typeof req.query.status != "undefined") {
+    customers.filter(function(customer) {
       if (customer.status === req.query.status) {
-        response.push(customer);
+        response.push(customer)
       }
-    });
+    })
   }
 
+  // Pass default customers if no query parameters are included
   if (Object.keys(req.query).length === 0) {
-    response = customers;
+    response = customers
   }
 
-  res.json(response);
-});
+  res.json(response)
+})
 
-app.listen(PORT, () => console.log(`API listening on port ${PORT}!`));
+app.listen(PORT, () => console.log(`API listening on port ${PORT}!`))

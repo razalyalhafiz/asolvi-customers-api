@@ -5,12 +5,13 @@ const customers = [
     position: "Sales Support",
     company: "AliBaba",
     status: "Hot",
-    avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/angelcolberg/128.jpg"
+    avatar:
+      "https://s3.amazonaws.com/uifaces/faces/twitter/angelcolberg/128.jpg"
   },
   {
     id: 1,
     name: "Chris Harris",
-    position: "Chief Executive Officer (CEO)",  
+    position: "Chief Executive Officer (CEO)",
     company: "Pharma Niaga",
     status: "Cool",
     avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/bungiwan/128.jpg"
@@ -33,4 +34,4 @@ const customers = [
   }
 ]
 
-module.exports = customers;
+module.exports = customers
