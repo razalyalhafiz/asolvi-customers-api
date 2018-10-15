@@ -9,5 +9,5 @@ https://asolvi-customers-api.herokuapp.com/customers?status=Hot
 <b>Note:</b> Since the API is secured with <b>Auth0</b>, an access token must be included in the request 
 header when making an API call.
 
-For own usage, please ensure the entries in <i>config.json</i> is modified according to your <b>Auth0</b> account.
+For own usage, please ensure the entries in the <i>config.json</i> file is modified according to your <b>Auth0</b> account.
 The web service can be started using the command <i>npm start</i> or <i>node server.js</i>.
